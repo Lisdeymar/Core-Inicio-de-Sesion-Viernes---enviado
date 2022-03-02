@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Dojos y Usuarios </title>
+    </head>
+    <body>
+        <h1>
+            Dojos
+        </h1>
+        <ul>
+            {% for dojo in listaDojos: %}
+                <li>
+                    {{ dojo.id }} - {{ dojo.name }} 
+                </li>
+            {% endfor %}
+        </ul>
+        <ul>
+            {% for dojo in listaDojosConUsuarios: %}
+                <li>
+                    <div>
+                        {{ dojo.id }} - {{ dojo.name }} 
+                    </div>
+                    <ul>
+                        {% for usuario in dojo.usuarios: %}
+                            <li>
+                                {{ usuario.first_name }} {{ usuario.last_name }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+        <form action="/dashboard" method="GET">
+            <button type="submit">
+                Volver al dashboard
+            </button>
+        </form>
+    </body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Dashboard </title>
+    </head>
+    <body>
+        <h1>
+            Bienvenido de vuelta {{ session['first_name'] }} {{ session['last_name']}} al portal de usuarios
+        </h1>
+        <h2>
+            Lista de usuarios
+        </h2>
+        <ul>
+            {% for usuario in usuarios: %}
+                <li>
+                    {{ usuario.first_name }} {{ usuario.last_name }} 
+                    <form method="POST" action="/usuario/remover/{{usuario.id}} ">
+                        <button>
+                            Remover
+                        </button>
+                    </form>
+                    <form method="GET" action="/usuario/editar/{{usuario.id}} ">
+                        <button>
+                            Editar
+                        </button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+        <form action="/departamentos" method="GET">
+            <button type="submit">
+                Ir a sección de dojos
+            </button>
+        </form>
+        <form action="/logout" method="GET">
+            <button type="submit">
+                Logout
+            </button>
+        </form>
+    </body>
+</html>

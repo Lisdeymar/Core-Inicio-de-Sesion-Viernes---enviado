@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Registro y Login </title>
+    </head>
+    <body>
+        <h2>
+            Registro
+        </h2>
+        <form action="/registroUsuario" method="POST">
+            <div>
+                <label for="first_name">
+                    First Name:
+                </label> 
+                <input type="text" id="first_name" name="first_name" />
+            </div>
+            <div>
+                <label for="last_name">
+                    Last Name:
+                </label> 
+                <input type="text" id="last_name" name="last_name" />
+            </div>
+            <div>
+                <label for="email">
+                    Email:
+                </label> 
+                <input type="text" id="email" name="email" />
+            </div>
+            <div>
+                <label for="password">
+                    Password:
+                </label> 
+                <input type="password" id="password" name="password" />
+            </div>
+            <div>
+                <label for="confirmPassword">
+                    Confirm Password:
+                </label> 
+                <input type="password" id="confirmPassword" name="confirmPassword" />
+            </div>
+            <div>
+                <label for="dojo">
+                    Dojo:
+                </label>
+                <select id="dojo_id" name="dojo_id">
+                    {% for dojo in listaDojos: %}
+                    <option value="{{ dojo.id }}">
+                        {{ dojo.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit">
+                Register
+            </button>
+            <div class="error">
+                {% with messages = get_flashed_messages(category_filter=['registro']) %}
+                    {% if messages %}
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Flash AHHHHHHH!!!!</strong>
+                            {% for message in messages %}
+                            <p>{{message}}</p>
+                            {% endfor %}
+                    </div>
+                    {% endif %}
+                {% endwith %}
+            </div>
+        </form>
+        <h2>
+            Login
+        </h2>
+        <form action="/login" method="POST">
+            <div>
+                <label for="loginUsuario">
+                    Email:
+                </label> 
+                <input type="text" id="loginUsuario" name="loginUsuario" />
+            </div>
+            <input type="hidden" value="12345" id="oculto" name="oculto" />
+            <div>
+                <label for="passwordUsuario">
+                    Password:
+                </label> 
+                <input type="password" id="passwordUsuario" name="passwordUsuario" />
+            </div>
+            <button type="submit">
+                Login
+            </button>
+            <div class="error">
+                {% with messages = get_flashed_messages(category_filter=['login']) %}
+                    {% if messages %}
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Flash AHHHHHHH!!!!</strong>
+                            {% for message in messages %}
+                            <p>{{message}}</p>
+                            {% endfor %}
+                    </div>
+                    {% endif %}
+                {% endwith %}
+            </div>
+        </form>
+    </body>
+</html>

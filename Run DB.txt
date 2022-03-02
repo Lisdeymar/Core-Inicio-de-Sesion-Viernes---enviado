@@ -1,0 +1,135 @@
+CREATE DATABASE usuariosrel_db;
+
+USE usuariosrel_db;
+
+/*1. El PK es el id y es un VARCHAR, es decir un string significa 
+que podremos colocar esto: 'TI-01' o 'MK-02', por eso utilizamos 
+strings*/
+CREATE TABLE departamentos(
+	id VARCHAR(5) NOT NULL PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL
+);
+
+/*2. Creado la tabla se pone el atributo foraneo y las mismas
+especificaciones de Datetype que la tabla departamentos,
+quedaría así:
+id_departamento VARCHAR(5) NOT NULL,
+FOREIGN KEY (id_departamento) REFERENCES departamentos(id)*/
+CREATE TABLE usuarios(
+	nombre VARCHAR(25) NOT NULL,
+    apellido VARCHAR(25) NOT NULL,
+    nombreusuario VARCHAR(25) NOT NULL PRIMARY KEY,
+    password VARCHAR(150) NOT NULL,
+    id_departamento VARCHAR(5) NOT NULL,
+    FOREIGN KEY (id_departamento) REFERENCES departamentos(id)
+);
+
+/*3. correr el create DB el USE y todo el 1 y 2 */
+
+
+/* 4. Vamos a colocar nombres de departamentos con su id para que
+en el registro solo podamos selecionar esos departamentos*/
+
+INSERT INTO departamentos( id, nombre )
+VALUES ( 'TI-01', 'Desarrollo Web' ),
+	   ( 'TI-02', 'Desarrollo de Hardware' ),
+       ( 'TI-03', 'Desarrollo de Software' ),
+       ( 'LY-01', 'Leyes' ),
+       ( 'BI-01', 'Biología' ),
+       ( 'QI-01', 'Química' );
+
+SELECT *
+FROM departamentos;
+
+SELECT *
+FROM usuarios;
+
+/*Despues de la carpeta PASO 1 */
+/*Para ver si funciona hacemos acá el JOIN */ 
+SELECT *
+FROM usuarios u, departamentos d
+WHERE u.id_departamento = d.id;
+
+
+
+
+------------------------------------------------------------------------------------------------
+DB DE CORE INICIO DE SESION VIERNES 
+
+ERD FORWARD ENGINEER
+
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema users_iniciosesionregist
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema users_iniciosesionregist
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `users_iniciosesionregist` DEFAULT CHARACTER SET utf8 ;
+USE `users_iniciosesionregist` ;
+
+-- -----------------------------------------------------
+-- Table `users_iniciosesionregist`.`dojos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `users_iniciosesionregist`.`dojos` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(145) NOT NULL,
+  `created_at` DATETIME NULL DEFAULT NOW(),
+  `updated_at` DATETIME NULL DEFAULT NOW(),
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `users_iniciosesionregist`.`usuarios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `users_iniciosesionregist`.`usuarios` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `first_name` VARCHAR(45) NOT NULL,
+  `last_name` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(145) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  `created_at` DATETIME NULL DEFAULT NOW(),
+  `updated_at` DATETIME NULL DEFAULT NOW(),
+  `dojo_id` INT NOT NULL,
+  PRIMARY KEY (`id`, `dojo_id`),
+  INDEX `fk_usuarios_dojos_idx` (`dojo_id` ASC) VISIBLE,
+  CONSTRAINT `fk_usuarios_dojos`
+    FOREIGN KEY (`dojo_id`)
+    REFERENCES `users_iniciosesionregist`.`dojos` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+
+-----------------------------------------------------------------------------------
+QUERIES DB DE CORE INICIO DE SESION VIERNES 
+
+SELECT *
+FROM usuarios;
+
+SELECT *
+FROM dojos;
+
+/* 4. Vamos a colocar nombres de dojos con id automático para que
+en el registro 1A solo podamos selecionar esos dojos y también en la edicion Ruta 2C*/
+
+INSERT INTO dojos( name )
+VALUES ( 'Seattle' ),
+	   ( 'Boston' ),
+       ( 'Taiwan' ),
+       ( 'China' ),
+       ( 'Alemania' ),
+       ( 'Peru' );
